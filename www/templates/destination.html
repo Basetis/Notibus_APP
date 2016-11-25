@@ -1,0 +1,99 @@
+<ion-view view-title="{{'destination_page_message' | translate}}" title="<i class='ion-flag'></i> {{'my_destination_message' | translate}}">
+
+  <ion-content class="destination-view-container" ng-init="loadLineStops(); clearSearch()" data-tap-disabled="true" scroll="true" overflow-scroll="true">
+
+    <div class="destination-subheader">
+      <h1 class="title" ng-class="{'min-title' : request.query.length}">
+        <i ng-if="!request.query.length" class="ion-android-bus" ng-class="lineColor('background')"></i>
+        {{linecode}} - {{'to_message' | translate}} {{lineDestination}}
+      </h1>
+    </div>
+
+    <div ng-if="!request.query.length" class="destination-subtitle">{{'select_destination_stop_message' | translate}}</div>
+
+    <!-- TABS -->
+    <div class="button-bar destination-segmented-control">
+      <a class="button destination-tabbar" ng-class="[{'destination-segmented-control-positive' : isActive('item1'), 'min-button' : request.query.length}, lineColor('background', 'item1')]" ng-click="setActive('item1')">
+        <i class="ion-navicon-round"></i>
+      </a>
+      <a class="button destination-tabbar" ng-class="[{'destination-segmented-control-positive' : isActive('item2'), 'min-button' : request.query.length}, lineColor('background', 'item2')]" ng-click="setActive('item2')">
+        <i class="ion-ios-search-strong"></i>
+      </a>
+      <a class="button destination-tabbar" ng-class="[{'destination-segmented-control-positive' : isActive('item3'), 'min-button' : request.query.length}, lineColor('background', 'item3')]" ng-click="setActive('item3')">
+        <i class="ion-navigate"></i>
+      </a>
+    </div>
+
+    <div class="destination-tabs-container">
+
+      <!-- LIST TAB -->
+      <div id="page1" class="destination-tab" ng-class="{'active' : isActive('item1')}">
+
+        <div class="destination-container stops">
+
+          <ion-scroll>
+
+            <ul class="list destination-stops-container">
+              <li class="item" ng-repeat="destinationStop in destinationStops" scroll-if="destinationStop.code == currentStopCode">
+                <div class="bus-stop-wrapper">
+                  <div class="bus-stop-vertical-line" ng-class="lineColor('border')">
+                    <div class="bus-stop-mark-container">
+                      <div class="bus-stop-mark" ng-class="[{true:'current-stop', false:''}[destinationStop.code==currentStopCode], lineColor('background')]"></div>
+                    </div>
+                  </div>
+                  <div class="bus-stop-name" id="{{destinationStop.code}}" ng:class="[enableOrDisableStop({{destinationStop.code}}), defineCurrentStop('{{destinationStop.code}}')]" ng-click='selectDestinationStop("{{destinationStop.code}}", "{{destinationStop.name}}")'>{{destinationStop.code}} {{destinationStop.name}}</div>
+                </div>
+                <div ng-if="$last" class="bus-last-stop-mark" ng-class="lineColor('background')"></div>
+              </li>
+            </ul>
+
+          </ion-scroll>
+
+        </div>
+
+      </div>
+
+      <!-- SEARCH TAB -->
+      <div id="page2" class="destination-tab destination-search-tab-container" ng-class="{'active' : isActive('item2')}">
+
+        <div class="destination-container">
+          <div class="item-text-wrap">
+
+            <div class="destination-searchbar-container">
+              <input type="search" placeholder="{{'stop_number_or_name_message' | translate}}" ng-model="request.query" ng-focus="searchFocused = true" ng-blur="searchFocused = false" ng-change="searchStop();" class="">
+              <button ng-if="request.query.length" class="button button-icon ion-android-close input-button" ng-click="clearSearch()"></button>
+              <div ng-if="request.query.length" class="destination-container stops" id="search-results">
+                <ion-scroll>
+                  <ul class="list destination-stops-container">
+                    <li class="item" ng-if="searchedDestinationStops.length" ng-repeat="searchedDestination in searchedDestinationStops">
+                      <div class="bus-stop-wrapper">
+                        <div class="bus-stop-name" id="{{searchedDestination.code}}" ng-click='selectDestinationStop("{{searchedDestination.code}}", "{{searchedDestination.name}}")'>{{searchedDestination.code}} {{searchedDestination.name}}</div>
+                      </div>
+                    </li>
+                    <li class="item" ng-if="!searchedDestinationStops.length">
+                      <div class="bus-stop-wrapper">
+                        <div class="bus-stop-name">{{'no_results_found_message' | translate}}</div>
+                      </div>
+                    </li>
+                  </ul>
+                </ion-scroll>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MAP TAB -->
+      <div id="page3" class="destination-tab" ng-class="{'active' : isActive('item3')}">
+        <div class="row map">
+          <div class="col">
+            <div id="map-canvas"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </ion-content>
+</ion-view>

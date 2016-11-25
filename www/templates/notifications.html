@@ -1,0 +1,43 @@
+<ion-view view-title="{{'notifications_page_message' | translate}}" title="<i class='ion-gear-b'></i> {{'my_notifications_message' | translate}} ">
+
+  <ion-content class="notifications-view-container">
+
+      <div class="notification-type-container">
+        <div class="item-text-wrap">
+          <div class="notification-notify-message">{{'how_do_you_want_us_to_notify_you_message' | translate}}</div>
+
+          <div>
+            <div ng-repeat="notificationType in notificationTypes">
+              <div class="notification-type">
+                <div class="notification-type-icon-container" ng-click="selectNotificationType($index)">
+                  <div class="notification-type-icon" ng-class="notificationTypeClass($index)">
+                    <i class="{{notificationType.ioniconClass}}"></i>
+                  </div>
+                </div>
+                <div class="notification-name">{{notificationType.name}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notification-type-container">
+        <div class="item-text-wrap">
+          <div class="notification-notify-message">{{'when_do_you_want_us_to_notify_you_message' | translate}}</div>
+
+          <div class="notification-times">
+            <span ng-repeat="notificationTime in notificationTimes">
+              <div class="notification-time {{notificationTime.elemNb}}" ng-click="selectNotificationTime($index)">
+                <span class="stop-icon" ng-class="[disableWhenNotEnoughStops($index, numberOfStops)]"><i class="ion-android-bus"></i></span><div>{{notificationTime.name}}</div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="notification-accept-button" ng-click="acceptNotificationParams()">
+        {{'accept_button_message' | translate}}
+      </div>
+
+  </ion-content>
+</ion-view>

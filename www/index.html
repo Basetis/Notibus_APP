@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' *; style-src 'self' 'unsafe-inline' *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/ionicons.min.css" rel="stylesheet">
+
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ngCordova/ng-cordova.min.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers/controllers.js"></script>
+    <script src="js/controllers/indexController.js"></script>
+    <script src="js/controllers/originController.js"></script>
+    <script src="js/controllers/destinationController.js"></script>
+    <script src="js/controllers/notificationsController.js"></script>
+    <script src="js/controllers/routeController.js"></script>
+    <script src="js/controllers/aboutController.js"></script>
+    <script src="js/controllers/promoController.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="lib/soap/soapclient.js"></script>
+    <script src="lib/soap/angular.soap.js"></script>
+    <script src="lib/translate/angular-translate.min.js"></script>
+
+  </head>
+
+  <body ng-app="transportMe" ng-controller="IndexCtrl">
+
+    <!-- El botón Back aparecerá cuando hagamos la navegación -->
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-back-button class="button-clear">
+      <i class="ion-arrow-left-c"></i> {{'back_message' | translate}}
+    </ion-nav-back-button>
+  </ion-nav-bar>
+
+  <ion-nav-view></ion-nav-view>
+
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es&sensor=true"></script>
+  </body>
+</html>

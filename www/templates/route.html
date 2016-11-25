@@ -1,0 +1,67 @@
+<ion-view view-title="{{'route_page_message' | translate}}" title="<i class='ion-android-map'></i> {{'my_route_message' | translate}}">
+
+  <ion-nav-buttons side="right">
+      <i ng-click="goToPromos()" class="icon ion-android-bulb notibus-nav-icon"></i>
+  </ion-nav-buttons>
+  <ion-content class="mapContainer" data-tap-disabled="true" scroll="true" overflow-scroll="true">
+    <div class="row map" scroll="false">
+      <div class="col">
+        <div id="map-canvas"></div>
+      </div>
+    </div>
+
+    <div class="row stops">
+      <div class="col">
+        <ul class="">
+          <li ng-click="selectBusStop($index, stop.code)"
+              ng-class="{true:'selected', false:''}[$index==selectedBusStopIndex]">
+
+            <div class="route-buttons" ng-click="back2notifications()" style="float:left">
+              <span class="close-route-icon">
+                <i class="ion-ios-bell"></i>
+              </span>
+              <span class="close-route-name highlight-text" id="">{{'notifications_message' | translate}}</span>
+            </div>
+
+
+            <div class="route-buttons" ng-click="cancelRoute()" style="float:right">
+              <span class="close-route-icon">
+                <i class="ion-close-circled"></i>
+              </span>
+              <span class="close-route-name highlight-text" id="">{{'cancel_route_message' | translate}}</span>
+            </div>
+
+            <div class="route-stop-selected" style="clear:both">
+              <span class="stop-icon">
+                <i class="ion-android-bus"></i>
+              </span>
+              <span class="stop-name highlight-text" id="">{{selectedLine.linecode}} - {{'to_message' | translate}} {{selectedLine.lineDestination}}</span>
+            </div>
+
+            <div class="route-container route-stops">
+
+              <ion-scroll>
+                <ul class="list route-destination-stops-container">
+                  <li class="route-destination-stops-item item" ng-repeat="stop in destinationStops">
+                    <div class="bus-stop-wrapper">
+                      <div class="bus-stop-vertical-line bus-stop-vertical-line-white" ng-class="">
+                        <div class="bus-stop-mark-container">
+                          <div class="bus-stop-mark" ng-class="[{true:'current-stop', false:''}[stop.code==currentStopCode&&$index!=notificationStop()], {true:'last-stop', false:''}[stop.code==destinationStopCode]]"></div>
+                        </div>
+                      </div>
+                      <div class="bus-stop-name" id="{{stop.code}}">{{stop.code}} {{stop.name}}</div>
+                    </div>
+                    <div ng-if="$last" class="bus-last-stop-mark" ng-class=""></div>
+                    <div ng-if="$index==notificationStop()" class="bus-notification-stop-mark" ng-class=""></div>
+                  </li>
+                </ul>
+              </ion-scroll>
+
+            </div>
+
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

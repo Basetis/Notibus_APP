@@ -1,0 +1,54 @@
+<ion-view view-title="{{'origin_page_message' | translate}}" title="<i class='ion-android-bus'></i> {{'my_bus_message' | translate}}">
+  <ion-nav-buttons side="primary">
+      <i ng-click="showAbout()" class="icon ion-ios-information notibus-nav-icon"></i>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+      <i ng-click="sendFeedback()" class="icon ion-compose notibus-nav-icon"></i>&nbsp;
+      <i ng-if="platform=='Android'" ng-click="shareLove()" class="icon ion-android-share notibus-nav-icon"></i>
+      <i ng-if="platform=='iOS'" ng-click="shareLove()" class="icon ion-ios-upload-outline notibus-nav-icon"></i>
+  </ion-nav-buttons>
+  <ion-content class="mapContainer" data-tap-disabled="true" scroll="true" overflow-scroll="true">
+    <div class="row map" scroll="false">
+      <div class="col">
+        <div id="map-canvas"></div>
+      </div>
+    </div>
+
+<!--<div><br><ul><li ng-click="sendDataToAndroidWear()">Wear TEST</li></ul><br></div>-->
+    <div class="row stops">
+      <div ng-if="stops.length" class="col">
+        <ul class="stops-list">
+          <li ng-click="selectBusStop($index, stop.code)"
+              ng-repeat="stop in stops"
+              ng-class="{true:'selected', false:''}[$index==selectedBusStopIndex]">
+
+            <div class="stops-list-stop">
+              <div class="table-cell"><span class="stop-icon"><i class="ion-android-bus"></i></span></div>
+              <div class="table-cell origin-stop-name"><span class="stop-name highlight-text" id="{{stop.code}}">{{stop.code}} {{stop.name}}</span></div>
+            </div>
+
+            <ul class="lines-list" ng:class="{true:'visible', false:''}[$index==selectedBusStopIndex]">
+              <li id="{{line.code}}"
+                  ng-repeat="line in stop.lines"
+                  ng-click='selectBusLine($index, "{{line.code}}", {{line.direction}}, "{{line.destination}}"); $event.stopPropagation()'
+                  ng-class="{true:'selectedLine', false:''}[$index==selectedBusLineIndex && $parent.$index==selectedBusStopIndex]">
+                <div class="lines-list-line">
+                  <div class="table-cell">
+                    <span class="line-code">{{line.code}}</span>
+                  </div>
+                  <div class="table-cell">
+                    {{"to_message" | translate}} <span class="highlight-text">{{line.destination}}</span> - {{line.arrivalTime}}
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+          </li>
+        </ul>
+      </div>
+      <div ng-if="!stops.length" class="no-stops">
+        {{ "no_nearby_stops" | translate }}
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
